@@ -10,7 +10,10 @@ export default function TradeForm() {
     const isEditMode = Boolean(id)
 
     const [formData, setFormData] = useState({
-        date: new Date().toISOString().split('T')[0],
+        date: (() => {
+            const now = new Date()
+            return now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0')
+        })(),
         time: new Date().toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
         pair: '',
         direction: 'Long',
@@ -84,12 +87,12 @@ export default function TradeForm() {
 
                 <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                        <label className="text-sm font-medium">Date</label>
-                        <input name="date" type="date" required value={formData.date} onChange={handleChange} className="w-full bg-background border border-border rounded-md px-3 py-2 text-sm focus:ring-1 focus:ring-primary outline-none" />
+                        <label htmlFor="date" className="text-sm font-medium">Date</label>
+                        <input id="date" name="date" type="date" required value={formData.date} onChange={handleChange} className="w-full bg-background border border-border rounded-md px-3 py-2 text-sm focus:ring-1 focus:ring-primary outline-none" />
                     </div>
                     <div className="space-y-2">
-                        <label className="text-sm font-medium">Time</label>
-                        <input name="time" type="time" required value={formData.time} onChange={handleChange} className="w-full bg-background border border-border rounded-md px-3 py-2 text-sm focus:ring-1 focus:ring-primary outline-none" />
+                        <label htmlFor="time" className="text-sm font-medium">Time</label>
+                        <input id="time" name="time" type="time" required value={formData.time} onChange={handleChange} className="w-full bg-background border border-border rounded-md px-3 py-2 text-sm focus:ring-1 focus:ring-primary outline-none" />
                     </div>
                 </div>
 
@@ -134,6 +137,7 @@ export default function TradeForm() {
                             <option value="Win">Win</option>
                             <option value="Lose">Lose</option>
                             <option value="BE">Break Even</option>
+                            <option value="Pending">Pending</option>
                         </select>
                     </div>
                     <div className="space-y-2">

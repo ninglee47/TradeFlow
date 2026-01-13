@@ -58,8 +58,8 @@ export default function TradeList() {
                                         <td className="px-6 py-4 text-muted-foreground">{trade.setup || '-'}</td>
                                         <td className="px-6 py-4">
                                             <span className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${trade.direction === 'Long'
-                                                    ? 'bg-green-500/10 text-green-500'
-                                                    : 'bg-red-500/10 text-red-500'
+                                                ? 'bg-green-500/10 text-green-500'
+                                                : 'bg-red-500/10 text-red-500'
                                                 }`}>
                                                 {trade.direction}
                                             </span>
@@ -68,7 +68,8 @@ export default function TradeList() {
                                         <td className="px-6 py-4 text-right">
                                             <span className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${trade.result === 'Win' ? 'bg-green-500/10 text-green-500' :
                                                     trade.result === 'Lose' ? 'bg-red-500/10 text-red-500' :
-                                                        'bg-gray-500/10 text-gray-500'
+                                                        trade.result === 'Pending' ? 'bg-yellow-500/10 text-yellow-500' :
+                                                            'bg-gray-500/10 text-gray-500'
                                                 }`}>
                                                 {trade.result}
                                             </span>

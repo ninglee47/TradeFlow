@@ -12,7 +12,7 @@ create table trades (
   pnl numeric,
   setup text,
   strategy text,
-  result text check (result in ('Win', 'Lose', 'BE')),
+  result text check (result in ('Win', 'Lose', 'BE', 'Pending')),
   comment text,
   chart_url text
 );
@@ -20,9 +20,13 @@ create table trades (
 -- Enable Row Level Security (RLS)
 alter table trades enable row level security;
 
--- Create Policy to allow users to see only their own trades (if using Auth)
--- For now, run this to allow anon access if not using Auth yet, or configure policies as needed.
--- create policy "Enable read access for all users" on trades for select using (true);
--- create policy "Enable insert for all users" on trades for insert with check (true);
--- create policy "Enable update for all users" on trades for update using (true);
--- create policy "Enable delete for all users" on trades for delete using (true);
+-- Create Policy to allow users to see their own trades (or public if no auth)
+-- For this simple local-first/single-user app without auth, we allow public access.
+create policy "Enable read access for all users" on trades for select using (true);
+create policy "Enable insert for all users" on trades for insert with check (true);
+create policy "Enable update for all users" on trades for update using (true);
+create policy "Enable delete for all users" on trades for delete using (true);
+
+-- To update the check constraint for 'Pending', you typically drop and re-add it.
+-- ALTER TABLE trades DROP CONSTRAINT trades_result_check;
+-- ALTER TABLE trades ADD CONSTRAINT trades_result_check CHECK (result IN ('Win', 'Lose', 'BE', 'Pending'));
