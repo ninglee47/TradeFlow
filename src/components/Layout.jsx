@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import { LayoutDashboard, PlusCircle, List, LineChart } from 'lucide-react'
+import { LayoutDashboard, PlusCircle, List, LineChart, BookOpen } from 'lucide-react'
 
 export default function Layout({ children }) {
     const location = useLocation()
@@ -8,6 +8,7 @@ export default function Layout({ children }) {
         { path: '/', label: 'Dashboard', icon: LayoutDashboard },
         { path: '/trades', label: 'Journal', icon: List },
         { path: '/add', label: 'Add Trade', icon: PlusCircle },
+        { path: '/strategy', label: 'Strategy', icon: BookOpen },
     ]
 
     return (
@@ -31,8 +32,8 @@ export default function Layout({ children }) {
                                     key={item.path}
                                     to={item.path}
                                     className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${isActive
-                                            ? 'bg-primary/10 text-primary'
-                                            : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                                        ? 'bg-primary/10 text-primary'
+                                        : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                                         }`}
                                 >
                                     <Icon className="w-5 h-5" />

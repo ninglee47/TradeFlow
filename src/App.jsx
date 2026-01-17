@@ -5,6 +5,8 @@ import Dashboard from './pages/Dashboard'
 import TradeList from './components/TradeList/TradeList.jsx'
 import TradeForm from './components/TradeForm/TradeForm.jsx'
 
+import Strategy from './pages/Strategy'
+
 // Placeholder components until we implement them
 // const Dashboard = () => <h2 className="text-2xl font-bold">Dashboard</h2>
 // const TradeList = () => <h2 className="text-2xl font-bold">Journal Logs</h2>
@@ -20,6 +22,7 @@ function App() {
             <Route path="/trades" element={<TradeList />} />
             <Route path="/add" element={<TradeForm />} />
             <Route path="/edit/:id" element={<TradeForm />} />
+            <Route path="/strategy" element={<Strategy />} />
           </Routes>
         </Layout>
       </BrowserRouter>
