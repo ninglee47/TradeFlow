@@ -4,6 +4,7 @@ import Layout from './components/Layout'
 import Dashboard from './pages/Dashboard'
 import TradeList from './components/TradeList/TradeList.jsx'
 import TradeForm from './components/TradeForm/TradeForm.jsx'
+import TradeDetails from './pages/TradeDetails.jsx'
 
 import Strategy from './pages/Strategy'
 
@@ -20,6 +21,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/trades" element={<TradeList />} />
+            <Route path="/trades/:id" element={<TradeDetails />} />
             <Route path="/add" element={<TradeForm />} />
             <Route path="/edit/:id" element={<TradeForm />} />
             <Route path="/strategy" element={<Strategy />} />

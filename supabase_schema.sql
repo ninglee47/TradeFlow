@@ -8,6 +8,8 @@ create table trades (
   pair text not null,
   direction text check (direction in ('Long', 'Short')),
   timeframe text,
+  entry_price numeric,
+  stop_loss numeric,
   target_rr numeric,
   pnl numeric,
   setup text,
@@ -30,3 +32,8 @@ create policy "Enable delete for all users" on trades for delete using (true);
 -- To update the check constraint for 'Pending', you typically drop and re-add it.
 -- ALTER TABLE trades DROP CONSTRAINT trades_result_check;
 -- ALTER TABLE trades ADD CONSTRAINT trades_result_check CHECK (result IN ('Win', 'Lose', 'BE', 'Pending'));
+
+-- If your table already exists, run these commands to add the new columns:
+-- ALTER TABLE trades ADD COLUMN entry_price numeric;
+-- ALTER TABLE trades ADD COLUMN stop_loss numeric;
+

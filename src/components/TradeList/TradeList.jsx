@@ -1,6 +1,6 @@
 import { useTrades } from '../../context/TradeContext'
 import { Link } from 'react-router-dom'
-import { ExternalLink, Edit2, Trash2 } from 'lucide-react'
+import { ExternalLink, Edit2, Trash2, Eye } from 'lucide-react'
 
 export default function TradeList() {
     const { trades, deleteTrade, loading } = useTrades()
@@ -34,6 +34,8 @@ export default function TradeList() {
                                 <th className="px-6 py-4 font-medium">Pair</th>
                                 <th className="px-6 py-4 font-medium">Setup</th>
                                 <th className="px-6 py-4 font-medium">Direction</th>
+                                <th className="px-6 py-4 font-medium">Entry</th>
+                                <th className="px-6 py-4 font-medium">Stop Loss</th>
                                 <th className="px-6 py-4 font-medium">RR</th>
                                 <th className="px-6 py-4 font-medium text-right">Result</th>
                                 <th className="px-6 py-4 font-medium text-right">P&L</th>
@@ -43,7 +45,7 @@ export default function TradeList() {
                         <tbody className="divide-y divide-border/50">
                             {trades.length === 0 ? (
                                 <tr>
-                                    <td colSpan="8" className="px-6 py-8 text-center text-muted-foreground">
+                                    <td colSpan="10" className="px-6 py-8 text-center text-muted-foreground">
                                         No trades found. Start by adding one!
                                     </td>
                                 </tr>
@@ -51,8 +53,10 @@ export default function TradeList() {
                                 trades.map((trade) => (
                                     <tr key={trade.id} className="hover:bg-muted/30 transition-colors">
                                         <td className="px-6 py-4">
-                                            <div className="font-medium">{trade.date}</div>
-                                            <div className="text-xs text-muted-foreground">{trade.time}</div>
+                                            <Link to={`/trades/${trade.id}`} className="hover:text-primary transition-colors block">
+                                                <div className="font-medium">{trade.date}</div>
+                                                <div className="text-xs text-muted-foreground">{trade.time}</div>
+                                            </Link>
                                         </td>
                                         <td className="px-6 py-4 font-medium">{trade.pair}</td>
                                         <td className="px-6 py-4 text-muted-foreground">{trade.setup || '-'}</td>
@@ -64,12 +68,14 @@ export default function TradeList() {
                                                 {trade.direction}
                                             </span>
                                         </td>
-                                        <td className="px-6 py-4">{trade.targetRR || '-'}</td>
+                                        <td className="px-6 py-4">{trade.entry_price || '-'}</td>
+                                        <td className="px-6 py-4">{trade.stop_loss || '-'}</td>
+                                        <td className="px-6 py-4">{trade.target_rr || '-'}</td>
                                         <td className="px-6 py-4 text-right">
                                             <span className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${trade.result === 'Win' ? 'bg-green-500/10 text-green-500' :
-                                                    trade.result === 'Lose' ? 'bg-red-500/10 text-red-500' :
-                                                        trade.result === 'Pending' ? 'bg-yellow-500/10 text-yellow-500' :
-                                                            'bg-gray-500/10 text-gray-500'
+                                                trade.result === 'Lose' ? 'bg-red-500/10 text-red-500' :
+                                                    trade.result === 'Pending' ? 'bg-yellow-500/10 text-yellow-500' :
+                                                        'bg-gray-500/10 text-gray-500'
                                                 }`}>
                                                 {trade.result}
                                             </span>
@@ -79,6 +85,9 @@ export default function TradeList() {
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="flex items-center justify-center gap-2">
+                                                <Link to={`/trades/${trade.id}`} className="p-2 hover:bg-muted rounded-md text-muted-foreground hover:text-primary transition-colors" title="View Details">
+                                                    <Eye className="w-4 h-4" />
+                                                </Link>
                                                 {trade.chart_url && (
                                                     <a href={trade.chart_url} target="_blank" rel="noopener noreferrer" className="p-2 hover:bg-muted rounded-md text-muted-foreground hover:text-foreground transition-colors" title="View Chart">
                                                         <ExternalLink className="w-4 h-4" />

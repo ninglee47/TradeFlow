@@ -17,6 +17,8 @@ export default function TradeForm() {
         time: new Date().toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
         pair: '',
         direction: 'Long',
+        entry_price: '',
+        stop_loss: '',
         timeframe: '',
         target_rr: '',
         pnl: '',
@@ -37,6 +39,8 @@ export default function TradeForm() {
                     ...tradeToEdit,
                     pnl: tradeToEdit.pnl || '',
                     target_rr: tradeToEdit.target_rr || '', // ensure naming matches
+                    entry_price: tradeToEdit.entry_price || '',
+                    stop_loss: tradeToEdit.stop_loss || '',
                     chart_url: tradeToEdit.chart_url || ''
                 })
             }
@@ -107,6 +111,17 @@ export default function TradeForm() {
                             <option value="Long">Long</option>
                             <option value="Short">Short</option>
                         </select>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium">Entry Price</label>
+                        <input name="entry_price" type="number" step="any" placeholder="0.00" value={formData.entry_price} onChange={handleChange} className="w-full bg-background border border-border rounded-md px-3 py-2 text-sm outline-none" />
+                    </div>
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium">Stop Loss</label>
+                        <input name="stop_loss" type="number" step="any" placeholder="0.00" value={formData.stop_loss} onChange={handleChange} className="w-full bg-background border border-border rounded-md px-3 py-2 text-sm outline-none" />
                     </div>
                 </div>
 
