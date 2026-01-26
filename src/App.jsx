@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard'
 import TradeList from './components/TradeList/TradeList.jsx'
 import TradeForm from './components/TradeForm/TradeForm.jsx'
 import TradeDetails from './pages/TradeDetails.jsx'
+import PatternAnalysis from './pages/PatternAnalysis.jsx'
 
 import Strategy from './pages/Strategy'
 
@@ -22,6 +23,7 @@ function App() {
             <Route path="/" element={<Dashboard />} />
             <Route path="/trades" element={<TradeList />} />
             <Route path="/trades/:id" element={<TradeDetails />} />
+            <Route path="/analysis" element={<PatternAnalysis />} />
             <Route path="/add" element={<TradeForm />} />
             <Route path="/edit/:id" element={<TradeForm />} />
             <Route path="/strategy" element={<Strategy />} />

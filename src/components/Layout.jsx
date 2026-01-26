@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import { LayoutDashboard, PlusCircle, List, LineChart, BookOpen } from 'lucide-react'
+import { LayoutDashboard, PlusCircle, List, LineChart, BookOpen, Brain } from 'lucide-react'
 
 export default function Layout({ children }) {
     const location = useLocation()
@@ -7,6 +7,7 @@ export default function Layout({ children }) {
     const navItems = [
         { path: '/', label: 'Dashboard', icon: LayoutDashboard },
         { path: '/trades', label: 'Journal', icon: List },
+        { path: '/analysis', label: 'Pattern AI', icon: Brain },
         { path: '/add', label: 'Add Trade', icon: PlusCircle },
         { path: '/strategy', label: 'Strategy', icon: BookOpen },
     ]
