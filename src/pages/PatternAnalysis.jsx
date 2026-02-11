@@ -116,8 +116,8 @@ export default function PatternAnalysis() {
             `
 
             // Using Google Gemini API (Free Tier compatible)
-            // Found 'gemini-2.0-flash' in available models list
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+            // switched to gemini-1.5-flash for better stability
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -132,7 +132,9 @@ export default function PatternAnalysis() {
             const data = await response.json()
 
             if (response.status === 429) {
-                throw new Error('Rate limit exceeded. Please wait 1 minute before trying again (Free Tier limit).')
+                // Try to extract specific error message from Google
+                const errorMsg = data.error?.message || 'Rate limit exceeded.'
+                throw new Error(`${errorMsg} (Please check your Google AI Studio quota)`)
             }
 
             if (data.error) throw new Error(data.error.message)

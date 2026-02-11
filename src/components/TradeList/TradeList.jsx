@@ -1,6 +1,6 @@
 import { useTrades } from '../../context/TradeContext'
 import { Link } from 'react-router-dom'
-import { ExternalLink, Edit2, Trash2, Eye } from 'lucide-react'
+import { ExternalLink, Edit2, Trash2, Eye, Download } from 'lucide-react'
 
 export default function TradeList() {
     const { trades, deleteTrade, loading } = useTrades()
@@ -13,6 +13,44 @@ export default function TradeList() {
         }
     }
 
+    const exportToTxt = () => {
+        if (trades.length === 0) {
+            alert('No trades to export.')
+            return
+        }
+
+        const content = trades.map((trade, index) => {
+            return `Trade #${trades.length - index}
+----------------------------------------
+Date: ${trade.date}
+Time: ${trade.time}
+Pair: ${trade.pair}
+Direction: ${trade.direction}
+Result: ${trade.result}
+P&L: ${trade.pnl}
+RR: ${trade.target_rr || 'N/A'}
+Entry Price: ${trade.entry_price || 'N/A'}
+Stop Loss: ${trade.stop_loss || 'N/A'}
+Strategy: ${trade.strategy || 'N/A'}
+Setup: ${trade.setup || 'N/A'}
+Comments: ${trade.comment || 'N/A'}
+Chart URL: ${trade.chart_url || 'N/A'}
+Created At: ${new Date(trade.created_at).toLocaleString()}
+----------------------------------------
+`
+        }).join('\n')
+
+        const blob = new Blob([content], { type: 'text/plain' })
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = `trading_journal_export_${new Date().toISOString().split('T')[0]}.txt`
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+        URL.revokeObjectURL(url)
+    }
+
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
@@ -20,9 +58,18 @@ export default function TradeList() {
                     <h2 className="text-3xl font-bold tracking-tight">Journal</h2>
                     <p className="text-muted-foreground">Manage and review your trading history.</p>
                 </div>
-                <Link to="/add" className="bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                    Add Log
-                </Link>
+                <div className="flex gap-2">
+                    <button
+                        onClick={exportToTxt}
+                        className="flex items-center gap-2 bg-secondary text-secondary-foreground hover:bg-secondary/80 px-4 py-2 rounded-lg text-sm font-medium transition-colors border border-border"
+                    >
+                        <Download className="w-4 h-4" />
+                        Export
+                    </button>
+                    <Link to="/add" className="bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                        Add Log
+                    </Link>
+                </div>
             </div>
 
             <div className="bg-card border border-border rounded-xl overflow-hidden shadow-sm">
